@@ -15,8 +15,8 @@ namespace Movie_system.Controllers
             _dbContext = dbContext;
         }
 
-        // GET: api/Movies
-        [HttpGet("GetMovies")]
+        // GET: Gets all movies that exists in the database
+        [HttpGet("GetAllMovies")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
             if (_dbContext.Movies == null)
@@ -26,8 +26,8 @@ namespace Movie_system.Controllers
             return await _dbContext.Movies.ToListAsync();
         }
 
-        // GET: api/Movies/1
-        [HttpGet("GetMovieWithId1")]
+        // GET: Gets a specific movie that exists in the database by typing in a specific id
+        [HttpGet("GetMovieById")]
         public async Task <ActionResult<Movie>> GetMovie(int id)
         {
             if (_dbContext.Movies == null)
@@ -44,7 +44,7 @@ namespace Movie_system.Controllers
             return movie;
         }
 
-        // POST: api/Movies
+        // POST: Adds a movie to the database
         [HttpPost("AddMovie")]
         public async Task<ActionResult<Movie>> PostMovie(Movie movie)
         {
@@ -54,8 +54,8 @@ namespace Movie_system.Controllers
             return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, movie);
         }
 
-        // PUT: api/Movies/1
-        [HttpPut("{id}")]
+        // PUT: Replaces a movie that exists in the database with another movie
+        [HttpPut("ReplaceMovie")]
         public async Task<IActionResult> PutMovie(int id, Movie movie)
         {
             if (id != movie.MovieId)
@@ -84,8 +84,8 @@ namespace Movie_system.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Movies/1
-        [HttpDelete("{id}")]
+        // DELETE: Deletes a movie from the database
+        [HttpDelete("DeleteMovie")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
             if (_dbContext.Movies == null)
