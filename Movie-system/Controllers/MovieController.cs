@@ -84,6 +84,27 @@ namespace Movie_system.Controllers
             return NoContent();
         }
 
+        // DELETE: api/Movies/1
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMovie(int id)
+        {
+            if (_dbContext.Movies == null)
+            {
+                return NotFound();
+            }
+
+            var movie = await _dbContext.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Movies.Remove(movie);
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool MovieExists(long id)
         {
             return (_dbContext.Movies?.Any(e => e.MovieId  == id)).GetValueOrDefault();
