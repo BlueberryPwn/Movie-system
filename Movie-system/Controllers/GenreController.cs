@@ -41,7 +41,7 @@ namespace Movie_system.Controllers
                 return NotFound();
             }
 
-            return genre();
+            return genre;
         }
     }
 }
