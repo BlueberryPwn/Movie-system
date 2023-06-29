@@ -43,5 +43,15 @@ namespace Movie_system.Controllers
 
             return movie;
         }
+
+        // POST: api/Movies
+        [HttpPost("AddMovie")]
+        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        {
+            _dbContext.Movies.Add(movie);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, movie);
+        }
     }
 }
