@@ -53,5 +53,40 @@ namespace Movie_system.Controllers
 
             return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, movie);
         }
+
+        // PUT: api/Movies/1
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutMovie(int id, Movie movie)
+        {
+            if (id != movie.MovieId)
+            {
+                return BadRequest();
+            }
+
+            _dbContext.Entry(movie).State = EntityState.Modified;
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovieExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool MovieExists(long id)
+        {
+            return (_dbContext.Movies?.Any(e => e.MovieId  == id)).GetValueOrDefault();
+        }
     }
 }
