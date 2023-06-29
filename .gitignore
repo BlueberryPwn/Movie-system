@@ -4,3 +4,4 @@
 .vs/
 Movie-system/.vs # Change this to the name of your git repo for Visual Studio git connection to work
 app.config
+appsettings.json
