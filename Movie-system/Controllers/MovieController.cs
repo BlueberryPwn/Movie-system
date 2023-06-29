@@ -15,7 +15,7 @@ namespace Movie_system.Controllers
             _dbContext = dbContext;
         }
 
-        // GET: Gets all movies that exists in the database
+        // GET: Gets all movies that exist in the database
         [HttpGet("GetAllMovies")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
@@ -26,7 +26,7 @@ namespace Movie_system.Controllers
             return await _dbContext.Movies.ToListAsync();
         }
 
-        // GET: Gets a specific movie that exists in the database by typing in a specific id
+        // GET: Get a specific movie that exist in the database by id
         [HttpGet("GetMovieById")]
         public async Task <ActionResult<Movie>> GetMovie(int id)
         {
@@ -44,7 +44,7 @@ namespace Movie_system.Controllers
             return movie;
         }
 
-        // POST: Adds a movie to the database
+        /*// POST: Adds a movie to the database
         [HttpPost("AddMovie")]
         public async Task<ActionResult<Movie>> PostMovie(Movie movie)
         {
@@ -103,7 +103,7 @@ namespace Movie_system.Controllers
             await _dbContext.SaveChangesAsync();
 
             return NoContent();
-        }
+        }*/
 
         private bool MovieExists(long id)
         {
