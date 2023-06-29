@@ -2,9 +2,9 @@
 
 namespace Movie_system.Models
 {
-    public class MovieContext : DbContext
+    public class MovieSystemContext : DbContext
     {
-        public MovieContext(DbContextOptions<MovieContext> options)
+        public MovieSystemContext(DbContextOptions<MovieSystemContext> options)
             : base(options)
         {
         }

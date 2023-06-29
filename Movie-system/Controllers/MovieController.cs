@@ -9,8 +9,8 @@ namespace Movie_system.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        private readonly MovieContext _dbContext;
-        public MovieController(MovieContext dbContext)
+        private readonly MovieSystemContext _dbContext;
+        public MovieController(MovieSystemContext dbContext)
         {
             _dbContext = dbContext;
         }

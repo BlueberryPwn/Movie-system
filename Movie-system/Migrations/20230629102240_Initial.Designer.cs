@@ -10,7 +10,7 @@ using Movie_system.Models;
 
 namespace Movie_system.Migrations
 {
-    [DbContext(typeof(MovieContext))]
+    [DbContext(typeof(MovieSystemContext))]
     [Migration("20230629102240_Initial")]
     partial class Initial
     {

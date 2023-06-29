@@ -10,7 +10,7 @@ namespace Movie_system
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<MovieContext>(options =>
+            builder.Services.AddDbContext<MovieSystemContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MovieContext")));
 
             builder.Services.AddControllers();
