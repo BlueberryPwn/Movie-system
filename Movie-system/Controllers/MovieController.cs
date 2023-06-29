@@ -16,7 +16,7 @@ namespace Movie_system.Controllers
         }
 
         // GET: api/Movies
-        [HttpGet]
+        [HttpGet("GetMovies")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
             if (_dbContext.Movies == null)
@@ -27,7 +27,7 @@ namespace Movie_system.Controllers
         }
 
         // GET: api/Movies/1
-        [HttpGet]
+        [HttpGet("GetMovieWithId1")]
         public async Task <ActionResult<Movie>> GetMovie(int id)
         {
             if (_dbContext.Movies == null)
