@@ -9,5 +9,6 @@ namespace Movie_system.Models
         {
         }
         public DbSet<Movie> Movies { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
     }
 }
