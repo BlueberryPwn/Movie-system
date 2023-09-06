@@ -28,7 +28,7 @@ namespace Movie_system.Controllers
 
         // GET: Get a specific movie that exist in the database by id
         [HttpGet("GetMovieById")]
-        public async Task <ActionResult<Movie>> GetMovie(int id)
+        public async Task<ActionResult<Movie>> GetMovie(int id)
         {
             if (_dbContext.Movies == null)
             {
@@ -105,9 +105,9 @@ namespace Movie_system.Controllers
             return NoContent();
         }*/
 
-        private bool MovieExists(long id)
+        /*private bool MovieExists(long id)
         {
             return (_dbContext.Movies?.Any(e => e.MovieId  == id)).GetValueOrDefault();
-        }
+        }*/
     }
 }
