@@ -16,7 +16,7 @@ namespace Movie_system.Controllers
         }
 
         [HttpGet("GetAllMovies")]
-        public async Task<ActionResult<List<Movies>>> GetMovieByUserId()
+        public async Task<ActionResult<List<Movies>>> GetAllMovies()
         {
             var movies = await _dbContext.Movies
                 .Select(m => new
@@ -25,7 +25,7 @@ namespace Movie_system.Controllers
                     m.MovieName,
                     m.MovieGenre,
                     m.MovieDescription,
-                    m.MovieLink,
+                    m.Link,
                     m.UserId
                 })
                 .ToListAsync();
@@ -40,39 +40,41 @@ namespace Movie_system.Controllers
                 .Where(m => m.UserId == UserId)
                 .Select(m => new
                 {
-                    m.MovieName, m.MovieGenre, m.MovieLink
+                    m.MovieName, m.MovieGenre, m.Link
                 })
                 .ToListAsync();
 
             return Ok(movies);
         }
 
-        [HttpPost("AddNewMovie/{MovieName}/{MovieLink}/{UserId}")]
-        public async Task<IActionResult> AddNewMovie(string MovieName, string MovieGenre, string MovieLink, int UserId)
+        [HttpPost("AddNewMovie/{MovieName}/{MovieGenre}/{MovieDescription}/{Link}/{UserId}")]
+        public async Task<IActionResult> AddNewMovie(string MovieName, int MovieGenre, string MovieDescription, string Link, int UserId)
         {
             try
             {
                 var existingMovies = await _dbContext.Movies
-                    .FirstOrDefaultAsync(m => m.MovieLink == MovieLink && m.MovieName == MovieName);
+                    .FirstOrDefaultAsync(m => m.Link == Link && m.MovieName == MovieName);
 
                 if (existingMovies != null)
                 {
                     return BadRequest("This has already been submitted to the database.");
                 }
 
+
                 var aMovieGenre = await _dbContext.Genres.FindAsync(MovieGenre);
                 var aUserId = await _dbContext.Users.FindAsync(UserId);
 
                 if (aMovieGenre == null || aUserId == null)
                 {
-                    return BadRequest("This genre is invalid.");
+                    return BadRequest("This genre or user is invalid.");
                 }
 
                 var newMovie = new Movies
                 {
                     MovieName = MovieName,
                     MovieGenre = MovieGenre,
-                    MovieLink = MovieLink,
+                    MovieDescription = MovieDescription,
+                    Link = Link,
                     UserId = UserId
                 };
 

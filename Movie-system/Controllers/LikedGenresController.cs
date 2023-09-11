@@ -26,7 +26,7 @@ namespace Movie_system.Controllers
             return Ok(genres);
         }
 
-        [HttpPost("AddLikedGenre/{LikedByUserId}/{GenreId}")]
+        [HttpPost("AddLikedGenre/{UserId}/{GenreId}")]
         public async Task<IActionResult> AddLikedGenre(int UserId, int GenreId)
         {
             try
