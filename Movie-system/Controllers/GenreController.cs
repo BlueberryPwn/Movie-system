@@ -31,23 +31,5 @@ namespace Movie_system.Controllers
 
             return Ok(genre);
         }
-
-        // GET: Get all genres that are connected to a specific user
-        [HttpGet("GetGenreById")]
-        public async Task<ActionResult<Genre>> GetGenre(int id)
-        {
-            if (_dbContext.Genres == null)
-            {
-                return NotFound();
-            }
-            var genre = await _dbContext.Genres.FindAsync(id);
-
-            if (genre == null)
-            {
-                return NotFound();
-            }
-
-            return genre;
-        }
     }
 }
