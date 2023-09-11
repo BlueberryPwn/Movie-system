@@ -15,7 +15,6 @@ namespace Movie_system.Controllers
             _dbContext = dbContext;
         }
 
-        // GET: Gets all genres that exist in the database
         [HttpGet("GetAllGenres")]
         public async Task<ActionResult<List<Genre>>> GetGenreByUserId()
         {
