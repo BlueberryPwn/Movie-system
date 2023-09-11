@@ -16,19 +16,19 @@ namespace Movie_system.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
+        public async Task<ActionResult<List<Users>>> GetAllUsers()
         {
             return Ok(await _dbContext.Users.ToListAsync());
         }
 
         [HttpGet("GetUserById/{UserId}")]
-        public async Task<ActionResult<List<LikedGenres>>> GetUserById(int UserId)
+        public async Task<ActionResult<List<Users>>> GetUserById(int UserId)
         {
             var user = await _dbContext.Users
                 .Where(u =>  u.UserId == UserId)
                 .Select(u => new
                 {
-                    u.UserId, u.UserName, u.UserEmailAdress
+                    u.UserId, u.UserName, u.UserEmail
                 })
                 .ToListAsync();
 

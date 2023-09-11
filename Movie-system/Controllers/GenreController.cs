@@ -16,7 +16,7 @@ namespace Movie_system.Controllers
         }
 
         [HttpGet("GetAllGenres")]
-        public async Task<ActionResult<List<Genres>>> GetGenresByUserId()
+        public async Task<ActionResult<List<Genres>>> GetAllGenres()
         {
             var genres = await _dbContext.Genres
                 .Select(g => new
