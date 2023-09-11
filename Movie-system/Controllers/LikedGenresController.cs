@@ -19,9 +19,9 @@ namespace Movie_system.Controllers
         public async Task<ActionResult<List<LikedGenres>>> GetLikedGenresByUserId(int UserId)
         {
             var genres = await _dbContext.LikedGenres
-                            .Where(lg => lg.UserId == UserId)
-                            .Select(lg => lg.GenreId)
-                            .ToListAsync();
+                .Where(lg => lg.UserId == UserId)
+                .Select(lg => lg.GenreId)
+                .ToListAsync();
 
             return Ok(genres);
         }

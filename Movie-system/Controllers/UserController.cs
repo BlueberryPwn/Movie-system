@@ -28,7 +28,9 @@ namespace Movie_system.Controllers
                 .Where(u =>  u.UserId == UserId)
                 .Select(u => new
                 {
-                    u.UserId, u.UserName, u.EmailAddress
+                    u.UserId,
+                    u.UserName,
+                    u.EmailAddress
                 })
                 .ToListAsync();
 

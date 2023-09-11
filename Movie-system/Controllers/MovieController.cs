@@ -40,7 +40,9 @@ namespace Movie_system.Controllers
                 .Where(m => m.UserId == UserId)
                 .Select(m => new
                 {
-                    m.MovieName, m.MovieGenre, m.Link
+                    m.MovieName,
+                    m.MovieGenre,
+                    m.Link
                 })
                 .ToListAsync();
 
