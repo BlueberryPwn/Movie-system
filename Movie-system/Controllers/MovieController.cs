@@ -28,90 +28,60 @@ namespace Movie_system.Controllers
                     m.MovieUserId
                 })
                 .ToListAsync();
+
+            return Ok(movie);
         }
 
-        // GET: Get a specific movie that exist in the database by id
-        [HttpGet("GetMovieById")]
-        public async Task<ActionResult<Movie>> GetMovie(int id)
+        [HttpGet("GetMovieByUserId/{MovieUserId}")]
+        public async Task<ActionResult<List<Movie>>> GetMovieByMovieUserId(int MovieUserId)
         {
-            if (_dbContext.Movies == null)
-            {
-                return NotFound();
-            }
-            var movie = await _dbContext.Movies.FindAsync(id);
+            var movies = await _dbContext.Movies
+                .Where(m => m.MovieUserId == MovieUserId)
+                .Select(m => new
+                {
+                    m.MovieTitle, m.MovieLink
+                })
+                .ToListAsync();
 
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            return movie;
+            return Ok(movies);
         }
 
-        /*// POST: Adds a movie to the database
-        [HttpPost("AddMovie")]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        [HttpPost("AddNewMovie/{MovieTitle}/{MovieLink}/{MovieUserId}")]
+        public async Task<IActionResult> AddNewMovie(string MovieTitle, string MovieLink, int MovieUserId)
         {
-            _dbContext.Movies.Add(movie);
-            await _dbContext.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, movie);
-        }
-
-        // PUT: Replaces a movie that exists in the database with another movie
-        [HttpPut("ReplaceMovie")]
-        public async Task<IActionResult> PutMovie(int id, Movie movie)
-        {
-            if (id != movie.MovieId)
-            {
-                return BadRequest();
-            }
-
-            _dbContext.Entry(movie).State = EntityState.Modified;
-
             try
             {
+                var existingMovies = await _dbContext.Movies
+                    .FirstOrDefaultAsync(m => m.MovieLink == MovieLink && m.MovieTitle == MovieTitle);
+
+                if (existingMovies != null)
+                {
+                    return BadRequest("This has already been added to the database.");
+                }
+
+                var aMovieUserId = await _dbContext.Users.FindAsync(MovieUserId);
+
+                if (aMovieUserId != null)
+                {
+                    return BadRequest("This genre is invalid.");
+                }
+
+                var newMovie = new Movie
+                {
+                    MovieTitle = MovieTitle,
+                    MovieLink = MovieLink,
+                    MovieUserId = MovieUserId
+                };
+
+                _dbContext.Movies.Add(newMovie);
                 await _dbContext.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MovieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"ERROR: {ex.Message}");
+            }
         }
-
-        // DELETE: Deletes a movie from the database
-        [HttpDelete("DeleteMovie")]
-        public async Task<IActionResult> DeleteMovie(int id)
-        {
-            if (_dbContext.Movies == null)
-            {
-                return NotFound();
-            }
-
-            var movie = await _dbContext.Movies.FindAsync(id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Movies.Remove(movie);
-            await _dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }*/
-
-        /*private bool MovieExists(long id)
-        {
-            return (_dbContext.Movies?.Any(e => e.MovieId  == id)).GetValueOrDefault();
-        }*/
     }
 }
