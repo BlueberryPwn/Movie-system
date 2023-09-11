@@ -6,7 +6,7 @@
         public string? MovieName { get; set; }
         public string? MovieGenre { get; set; }
         public string? MovieDescription { get; set; }
-        public int MovieLink { get; set; }
+        public string? MovieLink { get; set; }
         public int UserId { get; set; }
     }
 }

@@ -18,59 +18,62 @@ namespace Movie_system.Controllers
         [HttpGet("GetAllMovies")]
         public async Task<ActionResult<List<Movies>>> GetMovieByUserId()
         {
-            var movie = await _dbContext.Movies
+            var movies = await _dbContext.Movies
                 .Select(m => new
                 {
                     m.MovieId,
-                    m.MovieTitle,
+                    m.MovieName,
+                    m.MovieGenre,
                     m.MovieDescription,
                     m.MovieLink,
-                    m.MovieUserId
-                })
-                .ToListAsync();
-
-            return Ok(movie);
-        }
-
-        [HttpGet("GetMovieByUserId/{MovieUserId}")]
-        public async Task<ActionResult<List<Movies>>> GetMovieByMovieUserId(int MovieUserId)
-        {
-            var movies = await _dbContext.Movies
-                .Where(m => m.MovieUserId == MovieUserId)
-                .Select(m => new
-                {
-                    m.MovieTitle, m.MovieLink
+                    m.UserId
                 })
                 .ToListAsync();
 
             return Ok(movies);
         }
 
-        [HttpPost("AddNewMovie/{MovieTitle}/{MovieLink}/{MovieUserId}")]
-        public async Task<IActionResult> AddNewMovie(string MovieTitle, string MovieLink, int MovieUserId)
+        [HttpGet("GetMovieByUserId/{UserId}")]
+        public async Task<ActionResult<List<Movies>>> GetMovieByUserId(int UserId)
+        {
+            var movies = await _dbContext.Movies
+                .Where(m => m.UserId == UserId)
+                .Select(m => new
+                {
+                    m.MovieName, m.MovieGenre, m.MovieLink
+                })
+                .ToListAsync();
+
+            return Ok(movies);
+        }
+
+        [HttpPost("AddNewMovie/{MovieName}/{MovieLink}/{UserId}")]
+        public async Task<IActionResult> AddNewMovie(string MovieName, string MovieGenre, string MovieLink, int UserId)
         {
             try
             {
                 var existingMovies = await _dbContext.Movies
-                    .FirstOrDefaultAsync(m => m.MovieLink == MovieLink && m.MovieTitle == MovieTitle);
+                    .FirstOrDefaultAsync(m => m.MovieLink == MovieLink && m.MovieName == MovieName);
 
                 if (existingMovies != null)
                 {
-                    return BadRequest("This has already been added to the database.");
+                    return BadRequest("This has already been submitted to the database.");
                 }
 
-                var aMovieUserId = await _dbContext.Users.FindAsync(MovieUserId);
+                var aMovieGenre = await _dbContext.Genres.FindAsync(MovieGenre);
+                var aUserId = await _dbContext.Users.FindAsync(UserId);
 
-                if (aMovieUserId != null)
+                if (aMovieGenre == null || aUserId == null)
                 {
                     return BadRequest("This genre is invalid.");
                 }
 
                 var newMovie = new Movies
                 {
-                    MovieTitle = MovieTitle,
+                    MovieName = MovieName,
+                    MovieGenre = MovieGenre,
                     MovieLink = MovieLink,
-                    MovieUserId = MovieUserId
+                    UserId = UserId
                 };
 
                 _dbContext.Movies.Add(newMovie);
