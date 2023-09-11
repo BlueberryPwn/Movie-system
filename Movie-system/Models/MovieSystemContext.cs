@@ -11,10 +11,11 @@ namespace Movie_system.Models
             : base(options)
         {
         }
-        public DbSet<Genre> Genres { get; set; } = null!;
-        public DbSet<LikedGenre> LikedGenres { get; set; } = null!;
-        public DbSet<Movie> Movies { get; set; } = null!;
-        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Genres> Genres { get; set; } = null!;
+        public DbSet<LikedGenres> LikedGenres { get; set; } = null!;
+        public DbSet<Movies> Movies { get; set; } = null!;
+        public DbSet<Reviews> Reviews { get; set; } = null!;
+        public DbSet<Users> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

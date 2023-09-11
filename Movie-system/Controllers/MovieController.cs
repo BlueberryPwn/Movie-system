@@ -16,7 +16,7 @@ namespace Movie_system.Controllers
         }
 
         [HttpGet("GetAllMovies")]
-        public async Task<ActionResult<List<Movie>>> GetMovieByUserId()
+        public async Task<ActionResult<List<Movies>>> GetMovieByUserId()
         {
             var movie = await _dbContext.Movies
                 .Select(m => new
@@ -33,7 +33,7 @@ namespace Movie_system.Controllers
         }
 
         [HttpGet("GetMovieByUserId/{MovieUserId}")]
-        public async Task<ActionResult<List<Movie>>> GetMovieByMovieUserId(int MovieUserId)
+        public async Task<ActionResult<List<Movies>>> GetMovieByMovieUserId(int MovieUserId)
         {
             var movies = await _dbContext.Movies
                 .Where(m => m.MovieUserId == MovieUserId)
@@ -66,7 +66,7 @@ namespace Movie_system.Controllers
                     return BadRequest("This genre is invalid.");
                 }
 
-                var newMovie = new Movie
+                var newMovie = new Movies
                 {
                     MovieTitle = MovieTitle,
                     MovieLink = MovieLink,

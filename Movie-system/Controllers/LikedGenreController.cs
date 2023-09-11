@@ -16,7 +16,7 @@ namespace Movie_system.Controllers
         }
 
         [HttpGet("GetLikedGenresByUserId/{LikedByUserId}")]
-        public async Task<ActionResult<List<LikedGenre>>> GetLikedGenresByLikedByUserId(int LikedByUserId)
+        public async Task<ActionResult<List<LikedGenres>>> GetLikedGenresByLikedByUserId(int LikedByUserId)
         {
             var genre = await _dbContext.LikedGenres
                             .Where(lg => lg.LikedByUserId == LikedByUserId)
@@ -47,7 +47,7 @@ namespace Movie_system.Controllers
                     return BadRequest("This user or genre is invalid.");
                 }
 
-                var newLikedGenre = new LikedGenre
+                var newLikedGenre = new LikedGenres
                 {
                     LikedByUserId = LikedByUserId,
                     GenreId = GenreId

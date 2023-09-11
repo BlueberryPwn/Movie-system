@@ -1,9 +1,9 @@
 ﻿namespace Movie_system.Models
 {
-    public class LikedGenre
+    public class LikedGenres
     {
         public int LikedGenreId { get; set; }
         public int GenreId { get; set; }
-        public int LikedByUserId { get; set; }
+        public int UserId { get; set; }
     }
 }
