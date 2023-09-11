@@ -7,39 +7,39 @@ namespace Movie_system.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LikedGenreController : ControllerBase
+    public class LikedGenresController : ControllerBase
     {
         private readonly MovieSystemContext _dbContext;
-        public LikedGenreController(MovieSystemContext dbContext)
+        public LikedGenresController(MovieSystemContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        [HttpGet("GetLikedGenresByUserId/{LikedByUserId}")]
-        public async Task<ActionResult<List<LikedGenres>>> GetLikedGenresByLikedByUserId(int LikedByUserId)
+        [HttpGet("GetLikedGenresByUserId/{UserId}")]
+        public async Task<ActionResult<List<LikedGenres>>> GetLikedGenresByUserId(int UserId)
         {
-            var genre = await _dbContext.LikedGenres
-                            .Where(lg => lg.LikedByUserId == LikedByUserId)
+            var genres = await _dbContext.LikedGenres
+                            .Where(lg => lg.UserId == UserId)
                             .Select(lg => lg.GenreId)
                             .ToListAsync();
 
-            return Ok(genre);
+            return Ok(genres);
         }
 
         [HttpPost("AddLikedGenre/{LikedByUserId}/{GenreId}")]
-        public async Task<IActionResult> AddLikedGenre(int LikedByUserId, int GenreId)
+        public async Task<IActionResult> AddLikedGenre(int UserId, int GenreId)
         {
             try
             {
                 var existingLikedGenre = await _dbContext.LikedGenres
-                    .FirstOrDefaultAsync(lg => lg.LikedByUserId == LikedByUserId && lg.GenreId == GenreId);
+                    .FirstOrDefaultAsync(lg => lg.UserId == UserId && lg.GenreId == GenreId);
 
                 if (existingLikedGenre != null)
                 {
                     return BadRequest("This LikedGenre already exists for this user and genre.");
                 }
 
-                var user = await _dbContext.Users.FindAsync(LikedByUserId);
+                var user = await _dbContext.Users.FindAsync(UserId);
                 var genre = await _dbContext.Genres.FindAsync(GenreId);
 
                 if (user == null || genre == null)
@@ -47,13 +47,13 @@ namespace Movie_system.Controllers
                     return BadRequest("This user or genre is invalid.");
                 }
 
-                var newLikedGenre = new LikedGenres
+                var newLikedGenres = new LikedGenres
                 {
-                    LikedByUserId = LikedByUserId,
+                    UserId = UserId,
                     GenreId = GenreId
                 };
 
-                _dbContext.LikedGenres.Add(newLikedGenre);
+                _dbContext.LikedGenres.Add(newLikedGenres);
                 await _dbContext.SaveChangesAsync();
 
                 return Ok();
