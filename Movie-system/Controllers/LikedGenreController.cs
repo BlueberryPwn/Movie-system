@@ -15,6 +15,15 @@ namespace Movie_system.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet("GetLikedGenresByUserId/{LikedByUserId}")]
+        public async Task<ActionResult<List<LikedGenre>>> GetLikedGenresByLikedByUserId(int LikedByUserId)
+        {
+            var genre = await _dbContext.LikedGenres
+                .Where(lg => lg.LikedByUserId == LikedByUserId)
+                .Select(lg => lg.GenreId)
+                .ToListAsync();
 
+            return Ok(genre);
+        }
     }
 }
