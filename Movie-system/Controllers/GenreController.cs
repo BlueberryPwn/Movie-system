@@ -17,13 +17,19 @@ namespace Movie_system.Controllers
 
         // GET: Gets all genres that exist in the database
         [HttpGet("GetAllGenres")]
-        public async Task<ActionResult<IEnumerable<Genre>>> GetGenres()
+        public async Task<ActionResult<List<Genre>>> GetGenreByUserId()
         {
-            if (_dbContext.Genres == null)
-            {
-                return NotFound();
-            }
-            return await _dbContext.Genres.ToListAsync();
+            var genre = await _dbContext.Genres
+                .Select(g => new
+                {
+                    g.GenreId,
+                    g.GenreTitle,
+                    g.GenreDescription,
+
+                })
+                .ToListAsync();
+
+            return Ok(genre);
         }
 
         // GET: Get all genres that are connected to a specific user
