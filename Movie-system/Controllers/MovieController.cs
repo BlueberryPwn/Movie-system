@@ -15,15 +15,19 @@ namespace Movie_system.Controllers
             _dbContext = dbContext;
         }
 
-        // GET: Gets all movies that exist in the database
         [HttpGet("GetAllMovies")]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<ActionResult<List<Movie>>> GetMovieByUserId()
         {
-            if (_dbContext.Movies == null)
-            {
-                return NotFound();
-            }
-            return await _dbContext.Movies.ToListAsync();
+            var movie = await _dbContext.Movies
+                .Select(m => new
+                {
+                    m.MovieId,
+                    m.MovieTitle,
+                    m.MovieDescription,
+                    m.MovieLink,
+                    m.MovieUserId
+                })
+                .ToListAsync();
         }
 
         // GET: Get a specific movie that exist in the database by id
