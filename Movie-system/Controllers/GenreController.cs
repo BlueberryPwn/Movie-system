@@ -7,28 +7,28 @@ namespace Movie_system.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenreController : ControllerBase
+    public class GenresController : ControllerBase
     {
         private readonly MovieSystemContext _dbContext;
-        public GenreController(MovieSystemContext dbContext)
+        public GenresController(MovieSystemContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         [HttpGet("GetAllGenres")]
-        public async Task<ActionResult<List<Genres>>> GetGenreByUserId()
+        public async Task<ActionResult<List<Genres>>> GetGenresByUserId()
         {
-            var genre = await _dbContext.Genres
+            var genres = await _dbContext.Genres
                 .Select(g => new
                 {
                     g.GenreId,
-                    g.GenreTitle,
+                    g.GenreName,
                     g.GenreDescription,
 
                 })
                 .ToListAsync();
 
-            return Ok(genre);
+            return Ok(genres);
         }
     }
 }
