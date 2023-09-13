@@ -20,9 +20,9 @@ namespace Movie_system.Controllers
         {
             var TmdbUrl = $" https://api.themoviedb.org/3/discover/movie?api_key=6515a73f1ebd8a6b92919c33fab29510&with_genres={TmdbId}";
 
-            HttpClient client = new HttpClient(); // Sends a HTTP request to TMDB and awaits an answer
-            HttpResponseMessage response = await client.GetAsync(TmdbUrl);
-            response.EnsureSuccessStatusCode();
+            HttpClient client = new HttpClient(); // Sends a HTTP request to TMDB
+            HttpResponseMessage response = await client.GetAsync(TmdbUrl); // Awaits an answer from TMDB
+            response.EnsureSuccessStatusCode(); // Throws an exception if the response is not successful
             string responseBody = await response.Content.ReadAsStringAsync();
 
             return Ok(responseBody);
