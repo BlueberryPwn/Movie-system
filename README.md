@@ -30,7 +30,7 @@ This application can make several API-calls. Here's a list of them:
 
 ## TMDB
 
-This database utilizes TMDBs own discover API. Usage of TMDBs genre IDs is therefore necessary for the TMDB method to work correctly. Some of them may be found [here](https://www.themoviedb.org/talk/5daf6eb0ae36680011d7e6ee). Many thanks goes to TMDB for making this a possibility!
+This application utilizes TMDBs own API. Usage of TMDBs genre IDs is therefore necessary for the TMDB method to work correctly. Some of them may be found [here](https://www.themoviedb.org/talk/5daf6eb0ae36680011d7e6ee). Many thanks goes to TMDB for making this a possibility!
 
 <p align="center"><img
 img width="256" height="256" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg"></p>
