@@ -27,7 +27,7 @@ namespace Movie_system.Models
         {
             modelBuilder.Entity<Genres>(entity =>
             {
-                entity.HasKey(e => e.GenreId); // Ensures sure that this entity along with all other entities have keys
+                entity.HasKey(e => e.GenreId); // Makes sure that this entity along with all other entities have keys
             });
 
             modelBuilder.Entity<LikedGenres>(entity =>
